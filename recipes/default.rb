@@ -91,8 +91,23 @@ template File.join(wrapper_home,"conf","wrapper.conf") do
   mode 0644
   variables({
     :wrapper_home => wrapper_home,
-    :stash_base_dir => stash_base_dir
+    :stash_base_dir => stash_base_dir,
+    :newrelic_jar => File.join(stash_base_dir,'newrelic', 'newrelic.jar')
   })
+end
+
+#Install NewRelic if configured
+if node[:stash][:newrelic][:enabled]
+  include_recipe 'newrelic::java-agent'
+  #We need to explictly disable JSP autoinstrument
+  newrelic_conf = File.join(stash_base_dir, 'newrelic', 'newrelic.yml')
+  ruby_block "disable autoinstrument for JSP pages." do 
+    block do
+      f = Chef::Util::FileEdit.new(newrelic_conf)
+      f.search_file_replace(/auto_instrument: true/,'auto_instrument: false')
+      f.write_file
+    end
+  end
 end
 
 # Create wrapper startup script

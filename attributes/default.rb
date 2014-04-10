@@ -44,7 +44,18 @@ default[:stash][:jsw][:base_name]     = "wrapper-linux-#{node[:stash][:jsw][:arc
 default[:stash][:jsw][:version]       = "3.5.20"
 default[:stash][:jsw][:install_path]  = ::File.join(node[:stash][:install_path],"#{node[:stash][:base_name]}")
 default[:stash][:jsw][:source]        = "http://wrapper.tanukisoftware.com/download/#{node[:stash][:jsw][:version]}/wrapper-linux-#{node[:stash][:jsw][:arch]}-#{node[:stash][:jsw][:version]}.tar.gz"
+default[:stash][:newrelic][:enabled]  = false
+default[:stash][:newrelic][:version]  = "3.5.0"
+default[:stash][:newrelic][:app_name] = node['hostname']
 # Confluence doesn't support OpenJDK http://stash.atlassian.com/browse/CONF-16431
 # FIXME: There are some hardcoded paths like JAVA_HOME
 set[:java][:install_flavor]    = "oracle"
+
+normal[:newrelic][:'java-agent'][:install_dir]   = ::File.join(node[:stash][:install_path],node[:stash][:base_name],"newrelic")
+normal[:newrelic][:'java-agent'][:app_user] = node[:stash][:run_as]
+normal[:newrelic][:'java-agent'][:app_group] = node[:stash][:run_as]
+normal[:newrelic][:'java-agent'][:https_download] = "https://download.newrelic.com/newrelic/java-agent/newrelic-agent/#{node[:stash][:newrelic][:version]}/newrelic-agent-#{node[:stash][:newrelic][:version]}.jar"
+normal[:newrelic][:'java-agent'][:jar_file] = "newrelic-agent-#{node[:stash][:newrelic][:version]}.jar"
+normal[:newrelic][:application_monitoring][:logfile] = ::File.join(node[:stash][:home], "log", "newrelic.log")
+normal[:newrelic][:application_monitoring][:appname] = node[:stash][:newrelic][:app_name]
 
