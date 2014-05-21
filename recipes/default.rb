@@ -48,7 +48,7 @@ end
 
 # Set the permissions of the Atlassian Stash directory
 execute "configure stash permissions" do
-  command "chown -R #{node[:stash][:run_as]} #{node[:stash][:install_path]}"
+  command "chown -R #{node[:stash][:run_as]} #{node[:stash][:install_path]} #{node[:stash][:home]}"
   action :nothing
 end
 
