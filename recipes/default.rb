@@ -96,6 +96,12 @@ template File.join(wrapper_home,"conf","wrapper.conf") do
   })
 end
 
+# Modify the session-timeout for stash
+execute "modify session timeout" do
+  command "sed -i 's/<session-timeout>30<\/session-timeout>/<session-timeout>180<\/session-timeout>/' #{stash_base_dir}/conf/web.xml"
+  action :run
+end
+
 #Install NewRelic if configured
 if node[:stash][:newrelic][:enabled]
   include_recipe 'newrelic::java-agent'
