@@ -98,7 +98,7 @@ end
 
 # Modify the session-timeout for stash
 execute "modify session timeout" do
-  command "sed -i \"s/<session-timeout>30<\/session-timeout>/<session-timeout>180<\/session-timeout>/\" #{stash_base_dir}/conf/web.xml"
+  command "sed -i 's/<session-timeout>30<\\/session-timeout>/<session-timeout>180<\\/session-timeout>/' #{stash_base_dir}/conf/web.xml"
   action :run
 end
 
