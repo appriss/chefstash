@@ -1,0 +1,14 @@
+#>*******************************************************
+#> Migrated to database at jdbc:oracle:thin:@//sdlc1.cpsuxtd1u0zs.us-east-1.rds.amazonaws.com:1521/sdlc1
+#> Updated on 2013-10-05T14:00:42.514Z
+#>*******************************************************
+jdbc.driver=<%= node[:stash][:database][:driver] %>
+jdbc.url=<%= node[:stash][:database][:url] %>
+jdbc.user=<%= node[:stash][:database][:user] %>
+jdbc.password=<%= node[:stash][:database][:password] %>
+db.pool.partition.connection.maximum=20
+db.pool.partition.connection.minimum=4
+db.pool.partition.connection.threshold=10
+db.pool.partition.count=4
+db.pool.threads=4
+feature.auth.captcha=false
