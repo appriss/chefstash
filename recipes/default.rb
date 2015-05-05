@@ -128,20 +128,20 @@ template File.join(wrapper_home,"bin","stash") do
 end
 
 # Create shared directory for the configuration data
-directory ::File.join("#{node["stash"]["home"]}","shared") do
-  owner node[:stash][:run_as]
-  group node[:stash][:run_as]
-  mode '0755'
-  action :create
-end
+#directory ::File.join("#{node["stash"]["home"]}","shared") do
+#  owner node[:stash][:run_as]
+#  group node[:stash][:run_as]
+#  mode '0755'
+#  action :create
+#end
 
 # Add the stash-config.properties configuration for using the erb template
-template ::File.join("#{node["stash"]["home"]}","shared","stash-config.properties") do
-  owner node[:stash][:run_as]
-  source "stash-config.properties.erb"
-  mode 0644
-  action :create_if_missing
-end
+#template ::File.join("#{node["stash"]["home"]}","shared","stash-config.properties") do
+#  owner node[:stash][:run_as]
+#  source "stash-config.properties.erb"
+#  mode 0644
+#  action :create_if_missing
+#end
 
 execute "install startup script" do
   command "#{::File.join(wrapper_home,"bin","stash")} install"
